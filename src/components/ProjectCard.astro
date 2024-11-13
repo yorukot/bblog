@@ -1,0 +1,100 @@
+---
+// ProjectCard.astro
+const { project } = Astro.props;
+
+---
+<div class="project-card mb-4">
+  <div class="project-image-wrapper">
+    <img src={project.image} alt={project.title} class="project-image" />
+  </div>
+
+  <div class="p-4 content-between flex-col flex">
+    <div>
+      <div class="flex justify-between">
+        <h3 class="project-title">{project.title}</h3>
+        <div class="flex flex-nowrap gap-2 mt-auto">
+          
+          { project.github ? (
+          <a
+            target="_blank"
+            href={project.github}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="0.8em" height="0.8em" viewBox="0 0 24 24"><g fill="none"><g clip-path="url(#akarIconsGithubFill0)"><path fill="currentColor" fill-rule="evenodd" d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385c.6.105.825-.255.825-.57c0-.285-.015-1.23-.015-2.235c-3.015.555-3.795-.735-4.035-1.41c-.135-.345-.72-1.41-1.23-1.695c-.42-.225-1.02-.78-.015-.795c.945-.015 1.62.87 1.845 1.23c1.08 1.815 2.805 1.305 3.495.99c.105-.78.42-1.305.765-1.605c-2.67-.3-5.46-1.335-5.46-5.925c0-1.305.465-2.385 1.23-3.225c-.12-.3-.54-1.53.12-3.18c0 0 1.005-.315 3.3 1.23c.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23c.66 1.65.24 2.88.12 3.18c.765.84 1.23 1.905 1.23 3.225c0 4.605-2.805 5.625-5.475 5.925c.435.375.81 1.095.81 2.22c0 1.605-.015 2.895-.015 3.3c0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12" clip-rule="evenodd"/></g><defs><clipPath id="akarIconsGithubFill0"><path fill="#fff" d="M0 0h24v24H0z"/></clipPath></defs></g></svg>
+          </a>) : ""
+          }
+          { project.url ? (
+          <a
+            target="_blank"
+            href={project.url}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="0.88em" height="1em" viewBox="0 0 448 512"><path fill="currentColor" d="m190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3"/></svg>
+          </a>) : ""
+          }
+
+        </div>
+      </div>
+
+      <p class="py-2">{project.description}</p>
+
+      <div class="flex flex-wrap gap-2 mt-auto">
+        {project.stacks.map((stack: string) => (
+          <span class={`text-xl ${stack}`}></span>
+        ))}
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+<style>
+.project-card {
+  @apply block shadow-md rounded-lg transition-all ease-in-out duration-500 bg-skin-card;
+  position: relative;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 12px;
+  transition: transform 0.5s ease;
+}
+
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  border-radius: inherit;
+  padding: 2px; /* 邊框寬度 */
+  background: linear-gradient(45deg, rgb(var(--peach)), rgb(var(--mauve)));
+  mask: linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: -1;  /* 添加這行 */
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+.project-card:hover {
+  transform: scale(1.05) translateY(-10px);
+}
+
+
+  .project-image {
+    @apply block w-full h-auto rounded-lg;
+    object-fit: cover; /* 確保圖片填滿容器，並且不會變形 */
+    object-position: top; /* 使圖片貼合容器的頂部 */
+  }
+
+  .project-title {
+    @apply text-xl font-semibold;
+  }
+</style>

@@ -1,3 +1,5 @@
+const { iconsPlugin, getIconCollections } = require("@egoist/tailwindcss-icons")
+
 function withOpacity(variableName) {
   return ({ opacityValue }) => {
     if (opacityValue !== undefined) {
@@ -77,5 +79,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    iconsPlugin({
+      collections: getIconCollections("all"),
+    }),
+    require("@tailwindcss/typography")]
 };

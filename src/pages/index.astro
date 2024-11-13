@@ -7,6 +7,7 @@ import LinkButton from "@components/LinkButton.astro";
 import Hr from "@components/Hr.astro";
 import Card from "@components/Card";
 import Socials from "@components/Socials.astro";
+import ProjectCard from "@components/ProjectCard.astro"; // 引入新的組件
 import getSortedPosts from "@utils/getSortedPosts";
 import { SITE, SOCIALS } from "@config";
 
@@ -17,13 +18,82 @@ const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
 const socialCount = SOCIALS.filter(social => social.active).length;
+
+const projects = [
+  {
+    title: "InstructHub (Still in dev)",
+    description: "InstructHub is an opensource project that make everyone can contribute to course.And of course all course must be free, also focus on project!",
+    url: "https://example.com/superfile",
+    github: "https://github.com/yorukot/superfile",
+    image: "https://github.com/yorukot/superfile/blob/main/asset/demo.png?raw=true",
+    stacks: [
+      "i-skill-icons-golang",
+    ]
+  },
+  {
+    title: "Superfile",
+    description: "Superfile is a very fancy and modern terminal file manager that can complete the file operations you need!!",
+    url: "https://example.com/superfile",
+    github: "https://github.com/yorukot/superfile",
+    image: "https://github.com/yorukot/superfile/blob/main/asset/demo.png?raw=true",
+    stacks: [
+      "i-skill-icons-golang",
+    ]
+  },
+  {
+    title: "Tmlshock",
+    description: "A terminal ttl clock and stopwatch build by golang",
+    url: "https://github.com/yorukot/tmlshock",
+    github: "https://github.com/yorukot/tmlshock",
+    image: "https://github.com/yorukot/tmlshock/blob/main/img/feature.png?raw=true",
+    stacks: [
+      "i-skill-icons-golang"
+    ]
+  },
+  {
+    title: "MHCAT",
+    description: "This is a really useful discord bot have service more than \"1M\" servers, built with mongodb and djs",
+    url: "https://discord.com/oauth2/authorize?client_id=964185876559196181&permissions=8&scope=applications.commands%20bot",
+    github: "https://github.com/yorukot/old-mhcat",
+    image: "/src/assets/images/mhcat.png",
+    stacks: [
+      "i-devicon-discordjs",
+      "i-skill-icons-mongodb",
+      "i-vscode-icons-file-type-js-official"
+    ]
+  },
+  {
+    title: "MHCAT dashboard",
+    description: "This is a discord bot dashboard build with nextjs and next-auth",
+    url: "https://mhcat.nightcat.xyz/",
+    github: "https://github.com/yorukot/MHCAT-dashboard",
+    image: "/src/assets/images/mhcat-dashboard.png",
+    stacks: [
+      "i-skill-icons-nextjs-light",
+      "i-simple-icons-mui",
+      "i-simple-icons-nextui"
+    ]
+  },
+  {
+    title: "Fix your mouse",
+    description: "Actually this is just my really side-project one day my mouse broken so i made this to check my mouse haha",
+    url: "  https://fixyourmouse.vercel.app/",
+    github: "https://github.com/yorukot/fixyourmouse",
+    image: "/src/assets/images/fix-your-mouse.png",
+    stacks: [
+      "i-skill-icons-nextjs-light",
+      "i-skill-icons-tailwindcss-light"
+    ]
+  },
+
+];
 ---
 
 <Layout>
   <Header />
   <main id="main-content">
     <section id="hero">
-      <h1>Mingalaba</h1>
+      <h1>Yorukot</h1>
       <a
         target="_blank"
         href="/rss.xml"
@@ -31,33 +101,21 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         aria-label="rss feed"
         title="RSS Feed"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
-          ><path
+        <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon">
+          <path
             d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
-          ></path><path
+          ></path>
+          <path
             d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
-          ></path><circle cx="6" cy="18" r="2"></circle>
+          ></path>
+          <circle cx="6" cy="18" r="2"></circle>
         </svg>
         <span class="sr-only">RSS Feed</span>
       </a>
-
       <p>
-        AstroPaper is a minimal, responsive, accessible and SEO-friendly Astro
-        blog theme. This theme follows best practices and provides accessibility
-        out of the box. Light and dark mode are supported by default. Moreover,
-        additional color schemes can also be configured.
-      </p>
-      <p>
-        Read the blog posts or check
-        <LinkButton
-          className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
-          href="https://github.com/satnaing/astro-paper#readme"
-        >
-          README
-        </LinkButton> for more info.
+        I am a student from Taiwan, currently 16 years old. I am interested in all things related to technology and am working hard to learn C++ (although I don't particularly like it, it's just for the darn Asian exams). The most famous (actually not famous at all, haha) thing I've done is Superfile, a simple and easy-to-use terminal file manager. My main expertise lies in JavaScript, TypeScript, and Go!
       </p>
       {
-        // only display if at least one social link is enabled
         socialCount > 0 && (
           <div class="social-wrapper">
             <div class="social-links">Social Links:</div>
@@ -68,6 +126,22 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     </section>
 
     <Hr />
+
+    {
+      projects.length > 0 && (
+        <>
+          <section id="projects">
+            <h2>What I am proud of</h2>
+            <div class="sm:grid-cols-2 grid gap-4">
+              {projects.map((project) => (
+                <ProjectCard project={project} />
+              ))}
+            </div>
+          </section>
+          {recentPosts.length > 0 && <Hr />}
+        </>
+      )
+    }
 
     {
       featuredPosts.length > 0 && (
@@ -112,8 +186,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     <div class="all-posts-btn-wrapper">
       <LinkButton href="/posts/">
         All Posts
-        <svg xmlns="http://www.w3.org/2000/svg"
-          ><path
+        <svg xmlns="http://www.w3.org/2000/svg">
+          <path
             d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
           ></path>
         </svg>
@@ -123,6 +197,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
   <Footer />
 </Layout>
+
 
 <style>
   /* ===== Hero Section ===== */
@@ -160,4 +235,16 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   .all-posts-btn-wrapper {
     @apply my-8 text-center;
   }
+
+/* ===== Projects Section ===== */
+#projects {
+  @apply pb-6 pt-12 grid-cols-4;
+  grid-template-columns: repeat(2, 1fr); /* 大螢幕時，每行兩個項目 */
+  gap: 1.5rem; /* 項目之間的間距 */
+}
+
+#projects h2 {
+  @apply text-2xl font-semibold tracking-wide pb-6;
+}
+
 </style>
